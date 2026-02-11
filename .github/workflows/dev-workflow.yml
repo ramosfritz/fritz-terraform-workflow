@@ -4,9 +4,16 @@ on:
     branches:
       - develop
 
+permissions:
+  id-token: write
+  contents: read      
+
 jobs:
   plan:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: dev
     steps:
       - name: Check Repo
         uses: actions/checkout@v4
@@ -25,9 +32,11 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
-
+        working-directory: dev
       - name: Terraform Validate
         run: terraform validate
-
+        working-directory: dev
       - name: Terraform Plan
         run: terraform plan
+        working-directory: dev
+      
